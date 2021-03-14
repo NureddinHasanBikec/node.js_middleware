@@ -1,6 +1,7 @@
 const express = require("express");
 require("dotenv").config();
 const logger = require("morgan");
+const cookieParser = require("cookie-parser");
 
 
 const host = "localhost";
@@ -9,24 +10,15 @@ const app = express();
 
 // Middleware
 
-app.use((req, res, next) => { // Authentication
-    console.log("Auth");
-    res.isAuth = true;
-    next();
-});
+app.use(cookieParser());
 
-app.use((req, res, next) => {
-    console.log("Controller // db");
-    if(res.isAuth) {
-        console.log("Private data")
-    } else {
-        console.log("not auth")
-    }
+app.use((req, res, next) => { 
+    console.log("Cookies: ", req.cookies);
     next();
 });
 
 app.use((req, res) => {
-    console.log("middleware 3");
+    console.log("middleware 2");
     if(true) {
         res.send("send");
     };
